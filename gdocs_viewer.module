@@ -1,0 +1,103 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * TODO: Enter file description here.
+ */
+
+/**
+ * Implementation of hook_help().
+ */
+function gdocs_viewer_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#gdocs_viewer':
+      return t('Upload your file via filefile. Choose Google Docs Viewer in field formatter options.');
+    // OPTIONAL: Add additional cases for other paths that should display help text.
+  }
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+/*
+not needed for now
+ 
+function gdocs_viewer_menu() { 
+  // This is the minimum information you can provide for a menu item.
+  $items['TODO: Enter path'] = array(
+    'title' => 'TODO: Enter menu item title',
+    'page callback' => 'TODO: Enter callback function',
+    'access arguments' => array('TODO: Enter user permissions'),
+  );
+  // more complex menu item
+  $items['TODO: Enter path'] = array(
+    'title' => 'TODO: Enter menu item title',
+    'description' => 'TODO: Enter description',
+    'page callback' => 'TODO: Enter callback function',
+    'page arguments' => '', // An array of arguments to pass to the page callback function. Integer values pass the corresponding URL component.
+    'access callback' => '', // defaults to user_access()
+    'access arguments' => array('TODO: Enter user permissions'),
+    'weight' => 0,
+    'type' => MENU_NORMAL_ITEM, // One of MENU_NORMAL_ITEM / MENU_CALLBACK / MENU_SUGGESTED_ITEM / MENU_LOCAL_TASK / MENU_DEFAULT_LOCAL_TASK
+    'menu_name' => '', // Menu to place this item in.
+    'title callback' => '', // Function to generate the title, defaults to t(). 
+    'title arguments' => '', // Arguments to send to t() or your custom callback. 
+  );
+  // OPTIONAL: Fill in additional static menu items
+
+  return $items;
+}
+*/
+
+/**
+ * Implementation of hook_perm().
+ */
+function gdocs_viewer_perm() {
+  return array('access viewer');
+}
+
+
+/**
+ * Implementation of hook_theme().
+ */
+function gdocs_viewer_theme($existing, $type, $theme, $path) {
+  return array(
+    'gdocs_viewer_formatter_gdocs_viewer' => array(
+      'arguments' =>  array('element' => NULL),
+    ),
+  );
+}
+
+/**
+* Implementation of CCK's hook_field_formatter_info().
+*/
+function gdocs_viewer_field_formatter_info() {
+  return array(
+    'gdocs_viewer' => array(
+      'label' => t('Google Document Viewer'),
+      'field types' => array('filefield'),
+      'description' => t('Display file in a google document viewer iframe'),
+    ),
+  );
+}
+
+/**
+* Theme function for the 'googledoc' formatter.
+*/
+function theme_gdocs_viewer_formatter_gdocs_viewer($element) {
+  global $base_url;
+ 
+  $file = $element['#item'];
+  $field = content_fields($element['#field_name']);
+  
+  // Outputs original link to file with mimetype logo
+  $output = theme('filefield_item', $file, $field);
+ 
+// Outputs the iframe embed for the google doc. 
+  $output .='<iframe src="http://docs.google.com/viewer?url=' . $base_url . '/' . $element['#item']['filepath']  . '&embedded=true" style="width:620px; height:800px;" frameborder="0"></iframe>';
+  
+  return $output;
+  
+}

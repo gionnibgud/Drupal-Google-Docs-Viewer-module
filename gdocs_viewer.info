@@ -1,0 +1,6 @@
+; $Id$
+name = Gdocs viewer
+description = Using the Google Document Viewer with filefield to embed PDFs in your Drupal content. &quot;Inpired&quot; by http://tinyurl.com/4hnuutj
+dependencies[] = filefield
+package = Other
+core = 6.x
