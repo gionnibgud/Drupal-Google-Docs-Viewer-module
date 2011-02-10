@@ -1,0 +1,10 @@
+Very simple drupal module, it adds a formatter for CCK Filefield that can be used to render Google's Document Viewer in an iframe.
+Added to gitHub after reading this post: http://tinyurl.com/4hnuutj
+As planned by the original author, admin functions must be added to complete the module.
+
+1- Enable the module (do I have to tell you that?!)
+2- Add a cck filefiled to your content type
+3- Set the filefield options, restrict upload to pdf
+4- Set the formatter for the Filefield to Google Docs Viewer formatter
+
+
